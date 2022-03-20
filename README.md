@@ -31,9 +31,11 @@ if you want to test you can use [ros2_video_streamer](https://github.com/gbr1/ro
 `docker build -t gbr1/ros2_luma:latest .`
 
 ## Run docker
-`docker run -v $HOME/dev_ws:/root/dev_ws --device /dev/i2c-1 -it --rm gbr1/ros2_luma:latest bash`<br>
+`docker run --runtime nvidia -v $HOME/dev_ws:/root/dev_ws --device /dev/i2c-1 -it --rm gbr1/ros2_luma:latest bash`<br>
 for a new terminal:<br>
-`docker run to be fixed`
+`docker ps -a` <br>
+check name ang then:<br>
+`docker exec -it <name> bash`
 
 
 
