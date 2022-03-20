@@ -1,5 +1,5 @@
-# ros2_luma
-A simple package to use Luma.oled on jetson nano and other sbc across ROS2
+# ros2_oled
+A simple package to use [luma.oled](https://github.com/rm-hull/luma.oled) on Jetson Nano and other SBCs across ROS2.
 
 ## Build docker
 `docker build -t gbr1/ros2_luma:latest .`

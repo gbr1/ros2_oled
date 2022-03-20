@@ -1,6 +1,6 @@
 from setuptools import setup
 
-package_name = 'ros2_luma'
+package_name = 'ros2_oled'
 
 setup(
     name=package_name,
@@ -20,7 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'oled_node = ros2_luma.oled_node:main',
+            'oled_node = ros2_oled.oled_node:main',
         ],
     },
 )
