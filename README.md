@@ -47,7 +47,7 @@ and then: `sudo systemctl restart docker.service` <br>
 To build your docker:<br>
 `docker build -t gbr1/ros2_luma:latest .`
 <br>
-TO remove rubbish files:<br>
+To remove rubbish files:<br>
 `docker system prune`
 
 ## Run docker on Jetson SBCs
