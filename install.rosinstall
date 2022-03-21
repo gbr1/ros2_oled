@@ -1,0 +1,7 @@
+- git:
+    local-name: ros2_video_streamer
+    uri: https://github.com/gbr1/ros2_video_streamer.git
+- git:
+    local-name: ros2_oled
+    uri: https://github.com/gbr1/ros2_oled.git
+

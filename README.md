@@ -28,6 +28,18 @@ if you want to test you can use [ros2_video_streamer](https://github.com/gbr1/ro
 
 
 ## Build docker
+```json
+{
+    "runtimes": {
+        "nvidia": {
+            "path": "nvidia-container-runtime",
+            "runtimeArgs": []
+        }
+    },
+    "default-runtime": "nvidia"	
+}
+```
+
 `docker build -t gbr1/ros2_luma:latest .`
 
 ## Run docker
