@@ -27,7 +27,10 @@ if you want to test you can use [ros2_video_streamer](https://github.com/gbr1/ro
 
 
 
-## Build docker
+## Build docker on Jetson SBCs
+
+**Note:** You need to edit `/etc/docker/daemon.json` as following: <br>
+
 ```json
 {
     "runtimes": {
@@ -39,15 +42,21 @@ if you want to test you can use [ros2_video_streamer](https://github.com/gbr1/ro
     "default-runtime": "nvidia"	
 }
 ```
-
+and then: `sudo systemctl restart docker.service` <br>
+<br>
+To build your docker:<br>
 `docker build -t gbr1/ros2_luma:latest .`
+<br>
+TO remove rubbish files:<br>
+`docker system prune`
 
-## Run docker
-`docker run --runtime nvidia -v $HOME/dev_ws:/root/dev_ws --device /dev/i2c-1 -it --rm gbr1/ros2_luma:latest bash`<br>
+## Run docker on Jetson SBCs
+`docker run --runtime nvidia -v $HOME/dev_ws/src:/opt/dev_ws/src --device /dev/i2c-1 -it --rm gbr1/ros2_luma:latest bash`<br>
 for a new terminal:<br>
 `docker ps -a` <br>
-check name ang then:<br>
-`docker exec -it <name> bash`
+check name and then:<br>
+`docker exec -it <name> bash`<br>
+You need to `source /opt/dev_ws/install/setup.bash` in every new terminal.
 
 
 
