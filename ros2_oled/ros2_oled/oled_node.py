@@ -1,3 +1,4 @@
+from errno import EMULTIHOP
 import rclpy
 from rclpy.node import Node
 
@@ -22,29 +23,30 @@ class OledNode(Node):
         self.init_parameters()
 
         #init device
-        if self.display_type=='pygame':
+        if self.emulation and self.display_type=='pygame':
             from luma.emulator.device import pygame
             self.device=pygame()
 
-        elif self.display_type=='asciiart':
+        elif self.emulation and self.display_type=='asciiart':
             from luma.emulator.device import asciiart
             self.device=asciiart()
 
-        elif self.display_type=='asciiblock':
+        elif self.emulation and self.display_type=='asciiblock':
             from luma.emulator.device import asciiblock
             self.device=asciiblock()
 
-        elif self.display_type=='gifanim':
+        elif self.emulation and self.display_type=='gifanim':
             from luma.emulator.device import gifanim
             self.device=gifanim()
 
-        elif self.display_type=='capture':
-            from luma.emulator.device import captures
+        elif self.emulation and self.display_type=='capture':
+            from luma.emulator.device import capture
             self.device=capture()
 
-        elif self.display_type=='ssd1306':
+        elif self.emulation == False and self.display_type=='ssd1306':
             from luma.oled.device import ssd1306
-            self.device=ssd1306()
+            serial = i2c(port=self.i2c_port, address=self.i2c_address)
+            self.device=ssd1306(serial)
 
         else:
             self.get_logger().error('wrong display: %s' % self.display_type)
@@ -62,15 +64,23 @@ class OledNode(Node):
         #this part is to convert in pillow to be displayed using luma
         current_frame = cv2.cvtColor(current_frame, cv2.COLOR_BGR2RGB)
         image = PilImg.fromarray(current_frame)
-
         device_size = self.device.width, self.device.height
         image = image.resize(device_size, PilImg.ANTIALIAS)
         self.device.display(image.convert(self.device.mode))
 
     def init_parameters(self):
+        self.declare_parameter('display.emulation',False)
+        self.emulation = self.get_parameter('display.emulation').get_parameter_value().bool_value
+        
         self.declare_parameter('display.type','ssd1306')
         self.display_type = self.get_parameter('display.type').get_parameter_value().string_value
-        self.get_logger().info('paramtro %s' % self.display_type)
+
+        if self.emulation==False:
+            self.declare_parameter('display.i2c.port',0)
+            self.i2c_port = self.get_parameter('display.i2c.port').get_parameter_value().integer_value
+            self.declare_parameter('display.i2c.address',0x3C)
+            self.i2c_address = self.get_parameter('display.i2c.address').get_parameter_value().integer_value
+            
         
 
 
