@@ -2,7 +2,6 @@ from errno import EMULTIHOP
 import rclpy
 from rclpy.node import Node
 
-
 import cv2
 from cv_bridge import CvBridge
 from PIL import Image as PilImg
@@ -52,7 +51,7 @@ class OledNode(Node):
             self.get_logger().error('wrong display: %s' % self.display_type)
 
         # init subscriber
-        self.subscription = self.create_subscription(Image,'/image/image_raw',self.listener_callback,10)
+        self.subscription = self.create_subscription(Image,'/image_raw',self.listener_callback,10)
         self.subscription 
         
 
