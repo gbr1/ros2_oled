@@ -10,18 +10,25 @@ A simple package to use [luma.oled](https://github.com/rm-hull/luma.oled) on Jet
         sudo pip3 install -IU --no-cache-dir pillow
         sudo pip3 install -IU --no-cache-dir luma.oled
     ```
-- Luma emulator (?)
+- Luma emulator (if you need on desktop)
+    ```bash
+        sudo apt install python3-dev python3-pip build-essential
+        sudo apt install libsdl-dev libportmidi-dev libsdl-ttf2.0-dev libsdl-mixer1.2-dev libsdl-image1.2-dev
+        sudo -H pip3 install --upgrade --ignore-installed pip3 setuptools
+        sudo -H pip3 install --upgrade luma.emulator
+    ```
+
 
 ## Usage
 
 `ros2 run ros2_oled oled_node`
 <br>
 
-if you want to test you can use [ros2_video_streamer](https://github.com/gbr1/ros2_video_streamer) package: <br>
-`ros2 run camera_simulator camera_simulator --type video --path <path to video>`
+if you want to test you can use `image_publisher` package: <br>
+`ros2 run image_publisher image_publisher --ros-args -p filename:=<path to video> -p publish_rate:=<fps>`
 
 
-
+<br>
 
 
 
