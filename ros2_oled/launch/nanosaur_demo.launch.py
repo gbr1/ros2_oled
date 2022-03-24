@@ -16,7 +16,7 @@ def generate_launch_description():
             {'display.i2c.port':1},
         ],
         remappings=[
-            ('/image_raw', '/display/right'),
+            ('/image_raw', '/display/left'),
         ]
     )
 
@@ -38,8 +38,6 @@ def generate_launch_description():
 
     ld = LaunchDescription()
 
-    ld.add_action(declare_filename_cmd)
-    ld.add_action(declare_publish_rate_cmd)
     ld.add_action(oled_node_left)
     ld.add_action(oled_node_right)
 

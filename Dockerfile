@@ -6,7 +6,7 @@ RUN mkdir -p /opt/dev_ws/src && \
 
 RUN apt-get update -y && \
     apt-get install -y python3-natsort && \
-    pip3 install -IU --no-cache-dir -r /opt/dev_ws/src/ros2_oled/requirements.txt && \  
+    pip3 install -IU --no-cache-dir -r /opt/dev_ws/src/ros2_oled/ros2_oled/requirements.txt && \  
     rosdep install --from-paths /opt/dev_ws/src --ignore-src -r -y && \
     rm -rf /var/lib/apt/lists/*
 
