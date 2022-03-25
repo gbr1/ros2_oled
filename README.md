@@ -25,9 +25,20 @@ A simple package to use [luma.oled](https://github.com/rm-hull/luma.oled) on Jet
 <br>
 
 if you want to test you can use `image_publisher` package: <br>
-`ros2 run image_publisher image_publisher --ros-args -p filename:=<path to video> -p publish_rate:=<fps>`
+`ros2 run image_publisher image_publisher_node --ros-args -p filename:=<path to video> -p publish_rate:=<fps>`
 
+<br>
 
+## Topics
+`/image_raw`, _sensor_msgs::image_ topic subscriptio
+
+## Parameters
+- display.emulation, _bool_, default: false
+- display.type, _string_, default: ssd1306, others: pygame, asciiblock, asciiart, gifanim, capture
+- display.i2c.port, _int_, defalut: 0, it is the physical i2c port used
+- display.i2c.address, _int_, default: 0x3c, it is display's address
+
+<br>
 <br>
 
 
@@ -58,12 +69,26 @@ To remove rubbish files:<br>
 `docker system prune`
 
 ## Run docker on Jetson SBCs
-`docker run --runtime nvidia -v $HOME/dev_ws/src:/opt/dev_ws/src --device /dev/i2c-1 -it --rm gbr1/ros2_luma:latest bash`<br>
+
+`docker run --runtime nvidia -v $HOME/dev_ws/src:/opt/dev_ws/src --device /dev/i2c-0 --device /dev/i2c-1 -it --rm gbr1/ros2_luma:latest bash`<br>
 for a new terminal:<br>
 `docker ps -a` <br>
 check name and then:<br>
 `docker exec -it <name> bash`<br>
 You need to `source /opt/dev_ws/install/setup.bash` in every new terminal.
+
+<br>
+<br>
+
+## [Nanosaur.ai](https://nanosaur.ai)
+
+To use on nanosaur, start the docker and then launch: <br>
+`ros2 launch ros2_oled nanosaur_demo.launch.py` <br>
+after that open other two terminals, exec the docker bash, source ros2 in each docker bash and then: <br>
+`ros2 run image_publisher image_publisher_node --ros-args -p filename:=<your video.mp4> -p publish_rate:=30.0  -r __ns:=/left_video -r /left_video/image_raw:=/display/left` <br>
+and in the other terminal: <br>
+`ros2 run image_publisher image_publisher_node --ros-args -p filename:=<your video.mp4> -p publish_rate:=30.0 -r __ns:=/right_video -r /right_video/image_raw:=/display/right` <br>
+
 
 
 

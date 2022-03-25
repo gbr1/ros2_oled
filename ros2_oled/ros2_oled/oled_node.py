@@ -1,3 +1,27 @@
+#
+# The MIT License
+#
+# Copyright (c) 2022 Giovanni di Dio Bruno https://gbr1.github.io
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
+#
+
 from errno import EMULTIHOP
 import rclpy
 from rclpy.node import Node
@@ -11,6 +35,8 @@ from sensor_msgs.msg import Image
 from sensor_msgs.msg import CameraInfo
 
 from luma.core.interface.serial import i2c
+
+import smbus2
 
 
 class OledNode(Node):
@@ -44,7 +70,8 @@ class OledNode(Node):
 
         elif self.emulation == False and self.display_type=='ssd1306':
             from luma.oled.device import ssd1306
-            serial = i2c(port=self.i2c_port, address=self.i2c_address)
+            self.bus = smbus2.SMBus(self.i2c_port)
+            serial = i2c(bus=self.bus, address=self.i2c_address)
             self.device=ssd1306(serial)
 
         else:
